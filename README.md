@@ -49,7 +49,7 @@ Windows:
 
 ## Built With
 
-* [Spring Boot](https://spring.io/projects/spring-boot - Server-side framework used
+* [Spring Boot](https://spring.io/projects/spring-boot) - Server-side framework used
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [Hibernate](http://hibernate.org/) - ORM used
 
