@@ -1,9 +1,12 @@
 package co.descubra.descubraapi.controllers;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +21,7 @@ import co.descubra.descubraapi.exceptions.DataAlreadyExistsException;
 import co.descubra.descubraapi.exceptions.DataNotFoundException;
 import co.descubra.descubraapi.models.User;
 import co.descubra.descubraapi.repository.UserService;
+import co.descubra.descubraapi.security.TokenAuthenticationService;
 
 @RestController
 public class UserController {
@@ -31,6 +35,18 @@ public class UserController {
          
     }
      
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
+    	Map<String, String> response = new HashMap<String, String>();
+    	User user = userService.findByEmailAndPassword(credentials.get("email"), credentials.get("password"));
+    	if(user != null) {
+    		response.put("token", TokenAuthenticationService.generateToken(credentials.get("email")));
+    		return new ResponseEntity<Map<String, String>>(response, HttpStatus.OK);
+    	}
+    	response.put("error", "Email ou senha incorretos");
+    	return new ResponseEntity<Map<String, String>>(response, HttpStatus.UNAUTHORIZED);
+    }
+    
     @GetMapping (path = "/users/{userId}")
     public User getUser(@PathVariable long userId) throws DataNotFoundException {
      
