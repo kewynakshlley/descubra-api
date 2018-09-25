@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -31,5 +33,11 @@ public class TokenAuthenticationService {
     	}
     	response.setStatus(HttpStatus.UNAUTHORIZED.value());
     	return UNUNAUTHORIZED;
+    }
+    
+    public static String getEmailCurrentUser(HttpServletRequest request) {
+    	String token = request.getHeader(HEADER);
+    	Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+    	return claims.getBody().getSubject();
     }
 }

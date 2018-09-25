@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +33,11 @@ public class UserController {
     @GetMapping(path = "/users")
     public List<User> getAllEvents() {
         return userService.findAll();
-         
-         
+    }
+    
+    @GetMapping("/users/current")
+    public ResponseEntity<?> currentUser(HttpServletRequest request) {
+    	return new ResponseEntity<User>(this.getCurrentUser(request), HttpStatus.OK);
     }
      
     @PostMapping("/login")
@@ -78,6 +83,11 @@ public class UserController {
         user.setId(id);
         deleteUser(id);
         userService.save(user);
+    }
+    
+    // lembrar de adicionar esse metodo para um service
+    public User getCurrentUser(HttpServletRequest request) {
+    	return userService.findByEmail(TokenAuthenticationService.getEmailCurrentUser(request));
     }
  
 }
