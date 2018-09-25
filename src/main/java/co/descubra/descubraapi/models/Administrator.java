@@ -3,13 +3,11 @@ package co.descubra.descubraapi.models;
 
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
 * Represents the administrator of events.
@@ -25,18 +23,17 @@ public class Administrator {
    @Id
    @GeneratedValue
    private long administratorId;
-   @Column
+   
    private String name;
-   @JsonIgnore
-   @Column
+   
    private String password;
-   @Column
+   
    private String email;
-   @Column
+   
    private String cpf;
-   @Column
+   
    private String enterprise;
-   @Column
+   
    private String contact;
    @OneToMany(mappedBy="administrator")
    private List<Event> events;

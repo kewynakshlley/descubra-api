@@ -2,7 +2,7 @@ package co.descubra.descubraapi.models;
 
 import java.util.Date;
 
-import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,20 +24,13 @@ public class Event {
     @GeneratedValue
     private long eventId;
     private long administratorId;
-    @Column
     private String name;
-    @Column
     private String description;
-    @Column
     private String category;
     //@Future(message = "The date must be in te future.")
-    @Column
     private Date date;
-    @Column
     private String hour;
-    @Column
     private int latitude;
-    @Column
     private int longitude;
     @ManyToOne(fetch=FetchType.LAZY)
     @JsonIgnore
