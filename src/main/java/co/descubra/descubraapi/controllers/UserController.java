@@ -40,7 +40,7 @@ public class UserController {
     	return new ResponseEntity<User>(this.getCurrentUser(request), HttpStatus.OK);
     }
      
-    @PostMapping("/login")
+    @PostMapping("/users/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
     	Map<String, String> response = new HashMap<String, String>();
     	User user = userService.findByEmailAndPassword(credentials.get("email"), credentials.get("password"));

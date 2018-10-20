@@ -7,5 +7,7 @@ import co.descubra.descubraapi.models.Administrator;
 
 @Repository
 public interface AdministratorService extends JpaRepository<Administrator, Long>{
-
+	Administrator findByEmailAndPassword(String email, String password);
+	
+	Administrator findByEmail(String email);
 }
