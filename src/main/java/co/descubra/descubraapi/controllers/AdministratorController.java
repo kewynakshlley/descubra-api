@@ -2,16 +2,13 @@ package co.descubra.descubraapi.controllers;
 
 
 import java.net.URI;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,7 +25,7 @@ import co.descubra.descubraapi.models.Administrator;
 import co.descubra.descubraapi.models.Event;
 import co.descubra.descubraapi.repository.AdministratorService;
 import co.descubra.descubraapi.repository.EventService;
-import co.descubra.descubraapi.security.TokenAuthenticationService;
+
 
 
 
@@ -48,10 +45,7 @@ public class AdministratorController {
    public List<Administrator> getAllAdministrators() {
        return administratorService.findAll();
    }
-   @GetMapping("/administrators/current")
-   public ResponseEntity<?> currentAdministrator(HttpServletRequest request) {
-   	return new ResponseEntity<Administrator>(this.getCurrentAdministrator(request), HttpStatus.OK);
-   }
+  
     
    @GetMapping (path = "/administrators/{admId}")
    public Administrator getAdministrator(@PathVariable long admId) throws DataNotFoundException {
@@ -62,17 +56,6 @@ public class AdministratorController {
        return administrator;
    }
    
-   @PostMapping("/administrators/login")
-   public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
-   	Map<String, String> response = new HashMap<String, String>();
-   	Administrator administrator = administratorService.findByEmailAndPassword(credentials.get("email"), credentials.get("password"));
-   	if(administrator != null) {
-   		response.put("token", TokenAuthenticationService.generateToken(credentials.get("email")));
-   		return new ResponseEntity<Map<String, String>>(response, HttpStatus.OK);
-   	}
-   	response.put("error", "Email ou senha incorretos");
-   	return new ResponseEntity<Map<String, String>>(response, HttpStatus.UNAUTHORIZED);
-   }
     
    @PostMapping(path = "/administrators")
    public ResponseEntity<Object> createAdministrator(@RequestBody Administrator administrator) throws DataAlreadyExistsException {
@@ -120,9 +103,7 @@ public class AdministratorController {
 	   return ResponseEntity.created(location).build();
    }
    
-   public Administrator getCurrentAdministrator(HttpServletRequest request) {
-	   return administratorService.findByEmail(TokenAuthenticationService.getEmailCurrentUser(request));
-   }
+  
     
 
 }

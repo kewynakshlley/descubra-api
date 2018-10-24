@@ -35,9 +35,16 @@ public class EventController {
      
     @GetMapping(path = "/events")
     public List<Event> getAllEvents() {
+
         return eventService.findAll();
          
          
+    }
+    
+    @GetMapping(path = "/events/{ratio}/{longitude}/{latitude}/")
+    public List<Event> getEventsByRatio(){
+		return null;
+    	
     }
      
     @GetMapping (path = "/events/{eventId}")
@@ -49,10 +56,6 @@ public class EventController {
     @PostMapping(path = "/events")
     public ResponseEntity<Object> createEvent(@RequestBody Event event) throws DataAlreadyExistsException {
         Event createdEvent = eventService.save(event);
-        log.info("new event inserted: "+ event.getCategory());
-        /* Wil return the current request URI 
-         * When we create a resource, the best status code to return is 201 Created.
-         * */
          URI location = ServletUriComponentsBuilder
         .fromCurrentRequest()
         .path("/{id}")
