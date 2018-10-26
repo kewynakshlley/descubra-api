@@ -11,7 +11,7 @@ import co.descubra.descubraapi.models.Event;
 
 @Repository
 public interface EventService extends JpaRepository<Event, Long>{
-	@Query("SELECT *,\n" + 
+	/*@Query("SELECT *,\n" + 
 			"			(6371 * acos(\n" + 
 			"			 cos( radians(:latitude) )\n" + 
 			"			 * cos( radians( latitude ) )\n" + 
@@ -23,8 +23,9 @@ public interface EventService extends JpaRepository<Event, Long>{
 			"			FROM `Events` \n" + 
 			"			HAVING distance < :radius\n" + 
 			"			ORDER BY distance ASC;\";")
-	public List<Event> findByLatitudeAndLongitude(@Param("latitude") int latitude,
-			@Param("longitude") int longitude,
-			@Param("radius") double radius);
+	public List<Event> findByLatitudeAndLongitude(
+			@Param("latitude") float latitude,
+			@Param("longitude") float longitude,
+			@Param("radius") int radius);*/
 
 }

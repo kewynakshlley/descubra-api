@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -33,9 +34,8 @@ public class Administrator {
    private String contact;
    @OneToMany(mappedBy="administrator")
    private List<Event> events;
-   @OneToOne(fetch=FetchType.LAZY,
-   		cascade =  CascadeType.ALL,
-           mappedBy = "administrator")
+   @OneToOne(fetch = FetchType.LAZY, optional = false)
+   @JoinColumn(name = "user_id", nullable = false)
    private User user;
 
    public static final long DEFAULT_ADM_ID = -1;

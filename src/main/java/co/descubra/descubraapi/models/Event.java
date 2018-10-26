@@ -30,8 +30,8 @@ public class Event {
     //@Future(message = "The date must be in te future.")
     private Date date;
     private String hour;
-    private int latitude;
-    private int longitude;
+    private float latitude;
+    private float longitude;
     @ManyToOne(fetch=FetchType.LAZY)
     @JsonIgnore
     private Administrator administrator;
@@ -56,7 +56,7 @@ public class Event {
      * @param longitude       The longitude of this event.
      */
     public Event(long administratorId, String name, String description, String category, Date date,
-            String hour, int latitude, int longitude) {
+            String hour, float latitude, float longitude) {
         this.administratorId = administratorId;
  
         this.name = name;
@@ -200,7 +200,7 @@ public class Event {
      * 
      * @return the latitude of this event.
      */
-    public int getLatitude() {
+    public float getLatitude() {
         return latitude;
     }
  
@@ -209,7 +209,7 @@ public class Event {
      * 
      * @param latitude The new latitude for this event.
      */
-    public void setLatitude(int latitude) {
+    public void setLatitude(float latitude) {
         this.latitude = latitude;
     }
  
@@ -218,7 +218,7 @@ public class Event {
      * 
      * @return the longitude of this event.
      */
-    public int getLongitude() {
+    public float getLongitude() {
         return longitude;
     }
  
@@ -227,7 +227,7 @@ public class Event {
      * 
      * @param longitude The new longitude for this event.
      */
-    public void setLongitude(int longitude) {
+    public void setLongitude(float longitude) {
         this.longitude = longitude;
     }
     
@@ -248,21 +248,7 @@ public class Event {
                 + ", latitude=" + latitude + ", longitude=" + longitude + "]";
     }
  
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + (int) (administratorId ^ (administratorId >>> 32));
-        result = prime * result + ((category == null) ? 0 : category.hashCode());
-        result = prime * result + ((date == null) ? 0 : date.hashCode());
-        result = prime * result + ((description == null) ? 0 : description.hashCode());
-        result = prime * result + (int) (eventId ^ (eventId >>> 32));
-        result = prime * result + ((hour == null) ? 0 : hour.hashCode());
-        result = prime * result + latitude;
-        result = prime * result + longitude;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        return result;
-    }
+  
  
     @Override
     public boolean equals(Object obj) {

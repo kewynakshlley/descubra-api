@@ -7,10 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.JoinColumn;
 
 @Entity
+@Table(name = "users")
 public class User {
 	@Id
     @GeneratedValue
@@ -23,8 +27,10 @@ public class User {
     		cascade =  CascadeType.ALL,
             mappedBy = "user")
     private Administrator administrator;
-    @ManyToMany(mappedBy = "user")
-    private List<Role> roles;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_role",
+    joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private List<Role> role;
 
     protected User(){
 
@@ -38,7 +44,7 @@ public class User {
        this.email = email;
        this.dateOfBirthday = dateOfBirthday;
        this.administrator = administrator;
-       this.roles = roles;
+       this.role = roles;
     }
 
     public long getId() {
@@ -90,12 +96,12 @@ public class User {
 		this.administrator = administrator;
 	}
 
-	public List<Role> getRoles() {
-		return roles;
+	public List<Role> getRole() {
+		return role;
 	}
 
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
+	public void setRoles(List<Role> role) {
+		this.role = role;
 	}
 
 	@Override

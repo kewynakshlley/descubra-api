@@ -5,7 +5,7 @@ import java.net.URI;
 import java.util.List;
 
 
-import javax.servlet.http.HttpServletRequest;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,6 @@ import co.descubra.descubraapi.exceptions.DataAlreadyExistsException;
 import co.descubra.descubraapi.exceptions.DataNotFoundException;
 import co.descubra.descubraapi.models.User;
 import co.descubra.descubraapi.repository.UserService;
-import co.descubra.descubraapi.security.TokenAuthenticationService;
 
 @RestController
 public class UserController {
@@ -66,8 +65,6 @@ public class UserController {
     }
     
     // lembrar de adicionar esse metodo para um service
-    public User getCurrentUser(HttpServletRequest request) {
-    	return userService.findByEmail(TokenAuthenticationService.getEmailCurrentUser(request));
-    }
+    
  
 }

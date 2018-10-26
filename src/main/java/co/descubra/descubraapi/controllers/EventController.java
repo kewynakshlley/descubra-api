@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -26,7 +27,7 @@ import co.descubra.descubraapi.repository.EventService;
 
  
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+
 public class EventController {
 	
 	public static final Logger log =  LoggerFactory.getLogger(AdministratorController.class);
@@ -41,11 +42,14 @@ public class EventController {
          
     }
     
-    @GetMapping(path = "/events/{ratio}/{longitude}/{latitude}/")
-    public List<Event> getEventsByRatio(){
-		return null;
+   /* @GetMapping(path = "/events/ratio={ratio}/longitude={longitude}/latitude={latitude}/")
+    public List<Event> getEventsByRatio(
+    		@PathVariable int ratio,
+    		@PathVariable float longitude,
+    		@PathVariable float latitude){
+		return eventService.findByLatitudeAndLongitude(latitude, longitude, ratio);
     	
-    }
+    }*/
      
     @GetMapping (path = "/events/{eventId}")
     public Event getEvent(@PathVariable long eventId) throws DataNotFoundException {
@@ -70,11 +74,12 @@ public class EventController {
     	eventService.deleteById(eventId);
     }
      
-    @PutMapping(path = "/events/{eventId}")
-    public void updateEvent(@PathVariable("eventId") long id, Event event) {
+    @PostMapping(path = "/events/{eventId}")
+    public @ResponseBody String updateEvent(@PathVariable("eventId") long id, Event event) {
         event.setEventId(id);
         deleteEvent(id);
         eventService.save(event);
+        return "ok";
     }
  
 }
