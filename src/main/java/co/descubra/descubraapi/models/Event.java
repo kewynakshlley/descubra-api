@@ -32,7 +32,7 @@ public class Event {
     private String hour;
     private float latitude;
     private float longitude;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
     @JsonIgnore
     private Administrator administrator;
  

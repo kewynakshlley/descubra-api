@@ -1,32 +1,26 @@
 package co.descubra.descubraapi.models;
 
-
-import java.util.List;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
-
+import co.descubra.descubraapi.core.model.AbstractRole;
 
 @Entity
-public class Role {
+public class Role extends AbstractRole {
+	
 	@Id
 	@GeneratedValue
 	private long id;
-	private String codeName;
+	@Column
 	private String description;
-	@ManyToMany(mappedBy = "role")
-	private List<User> user;
 	
-	public Role(int id, String codeName, String description, List<User> user) {
-		super();
+	public Role() {}
+	
+	public Role(int id, String description) {
 		this.id = id;
-		this.codeName = codeName;
 		this.description = description;
-		this.user = user;
 	}
 
 	public long getId() {
@@ -37,14 +31,6 @@ public class Role {
 		this.id = id;
 	}
 
-	public String getCodeName() {
-		return codeName;
-	}
-
-	public void setCodeName(String codeName) {
-		this.codeName = codeName;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -52,27 +38,5 @@ public class Role {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	
-
-	public List<User> getUser() {
-		return user;
-	}
-
-	public void setUser(List<User> user) {
-		this.user = user;
-	}
-
-	@Override
-	public String toString() {
-		return "Role [id=" + id + ", codeName=" + codeName + ", description=" + description + ", user=" + user + "]";
-	}
-	
-	
-	
-	
-	
-	
-	
 
 }

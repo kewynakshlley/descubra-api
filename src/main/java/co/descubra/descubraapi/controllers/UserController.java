@@ -1,14 +1,10 @@
 package co.descubra.descubraapi.controllers;
 
-import java.net.URI;
-
 import java.util.List;
-
-
-
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import co.descubra.descubraapi.exceptions.DataAlreadyExistsException;
 import co.descubra.descubraapi.exceptions.DataNotFoundException;
@@ -28,6 +23,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping(path = "/users")
     public List<User> getAllEvents() {
         return userService.findAll();
@@ -36,20 +32,13 @@ public class UserController {
     
     @GetMapping (path = "/users/{userId}")
     public User getUser(@PathVariable long userId) throws DataNotFoundException {
-     
-        return userService.getOne(userId);
+        return userService.findById(userId).get();
     }
      
     @PostMapping(path = "/users")
-    public ResponseEntity<Object> createUser(@RequestBody User user) throws DataAlreadyExistsException {
+    public ResponseEntity<?> createUser(@RequestBody User user) throws DataAlreadyExistsException {
         User createdUser = userService.save(user);
-        URI location = ServletUriComponentsBuilder
-        .fromCurrentRequest()
-        .path("/{id}")
-        .buildAndExpand(createdUser.getId())
-        .toUri();
-         
-        return ResponseEntity.created(location).build();
+        return new ResponseEntity<User>(createdUser, HttpStatus.CREATED);
     }
      
     @DeleteMapping(path = "/users/{userId}")
@@ -58,13 +47,10 @@ public class UserController {
     }
      
     @PutMapping(path = "/users/{userId}")
-    public void updateUser(@PathVariable("userId") long id, User user) {
+    public ResponseEntity<?> updateUser(@PathVariable("userId") long id, @RequestBody User user) {
         user.setId(id);
-        deleteUser(id);
-        userService.save(user);
+        user = userService.save(user);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
     }
-    
-    // lembrar de adicionar esse metodo para um service
-    
  
 }

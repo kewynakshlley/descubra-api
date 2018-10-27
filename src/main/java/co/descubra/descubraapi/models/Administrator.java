@@ -3,7 +3,6 @@ package co.descubra.descubraapi.models;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -34,7 +33,7 @@ public class Administrator {
    private String contact;
    @OneToMany(mappedBy="administrator")
    private List<Event> events;
-   @OneToOne(fetch = FetchType.LAZY, optional = false)
+   @OneToOne(fetch = FetchType.EAGER, optional = false)
    @JoinColumn(name = "user_id", nullable = false)
    private User user;
 
