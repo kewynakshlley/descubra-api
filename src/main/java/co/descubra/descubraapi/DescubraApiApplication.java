@@ -3,6 +3,7 @@ package co.descubra.descubraapi;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import co.descubra.descubraapi.core.config.AppContext;
 

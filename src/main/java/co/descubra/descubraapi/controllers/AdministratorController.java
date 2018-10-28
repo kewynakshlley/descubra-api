@@ -24,7 +24,7 @@ import co.descubra.descubraapi.repository.AdministratorService;
 import co.descubra.descubraapi.repository.EventService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+
 public class AdministratorController {
 	public static final Logger log =  LoggerFactory.getLogger(AdministratorController.class);
 
