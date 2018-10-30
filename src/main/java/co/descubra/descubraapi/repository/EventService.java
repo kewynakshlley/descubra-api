@@ -6,26 +6,23 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
 import co.descubra.descubraapi.models.Event;
 
 @Repository
 public interface EventService extends JpaRepository<Event, Long>{
-	/*@Query("SELECT *,\n" + 
-			"			(6371 * acos(\n" + 
-			"			 cos( radians(:latitude) )\n" + 
-			"			 * cos( radians( latitude ) )\n" + 
-			"			 * cos( radians( longitude ) - radians(:longitude) )\n" + 
-			"			 + sin( radians(:latitude) )\n" + 
-			"			 * sin( radians( latitude ) ) \n" + 
-			"			 )\n" + 
-			"			) AS distance\n" + 
-			"			FROM `Events` \n" + 
-			"			HAVING distance < :radius\n" + 
-			"			ORDER BY distance ASC;\";")
-	public List<Event> findByLatitudeAndLongitude(
-			@Param("latitude") float latitude,
-			@Param("longitude") float longitude,
-			@Param("radius") int radius);*/
+	@Query("SELECT e FROM Event e WHERE " + 
+					"("
+							+ "6371 * acos(" + 
+								" cos(radians(:latitude))" + 
+								" * cos(radians(e.latitude))" + 
+								" * cos(radians(:longitude) - radians(e.longitude) )" + 
+								" + sin(radians(:latitude))" + 
+								" * sin(radians(e.latitude))" + 
+							" )" + 
+						" ) < :radius")
+	public List<Event> findByNamedParams(
+			@Param("radius") Double radius,
+			@Param("longitude") Float longitude,
+			@Param("latitude") Float latitude);
 
 }

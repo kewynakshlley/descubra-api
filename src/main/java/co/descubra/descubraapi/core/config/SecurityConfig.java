@@ -19,13 +19,14 @@ import co.descubra.descubraapi.core.security.LoginFilter;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
-	
 	@Override
+	
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().disable().csrf().disable().authorizeRequests()
+		http.cors().and().csrf().disable().authorizeRequests()
 				.antMatchers(HttpMethod.POST, "/login").permitAll()
 				.antMatchers("/administrators").permitAll()
 				.antMatchers("/users").permitAll()
+				
 				.anyRequest().authenticated()
 				.and()
 				.sessionManagement()
@@ -35,6 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 				.addFilterBefore(new AuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 		
 	}
+	
 	
 	
 

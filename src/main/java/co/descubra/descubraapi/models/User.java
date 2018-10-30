@@ -4,8 +4,6 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -17,10 +15,7 @@ import javax.persistence.JoinColumn;
 @Entity
 @Table(name = "users")
 public class User extends AbstractUser {
-	
-	@Id
-    @GeneratedValue
-    private long id;
+
     private String name;
     private String email;
     private String dateOfBirthday;
@@ -32,21 +27,15 @@ public class User extends AbstractUser {
 
     public User() { }
 
-    public User(long id, String name, String email, String dateOfBirthday, Set<Role> roles){
-       this.id = id;
+    public User(String name, String email, String dateOfBirthday, Set<Role> roles){
+       
        this.name = name;
        this.email = email;
        this.dateOfBirthday = dateOfBirthday;
        this.role = roles;
     }
 
-    public long getId() {
-        return id;
-    }
 
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -75,7 +64,6 @@ public class User extends AbstractUser {
 	@Override
     public String toString() {
         return "User{" +
-                "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", dateOfBirthday='" + dateOfBirthday + '\'' +

@@ -27,6 +27,7 @@ public class TokenAuthenticationService {
 
 	static void addAuthentication(HttpServletResponse response, LoginDTO dto) {
 		String accessToken = Jwts.builder().setSubject(dto.getUsername())
+				.claim("id", dto.getId())
 				.claim("roles", toGrantedAuthorities(dto.getRoles()).toString())
 				.signWith(SignatureAlgorithm.HS512, SECRET).compact();
 		
@@ -50,7 +51,7 @@ public class TokenAuthenticationService {
 	}
 	
 	static List<GrantedAuthority> getGrantedAuthorities(String authorities) {
-		return authorities == null ? new ArrayList<GrantedAuthority>() : Arrays.asList(authorities.split(",")).stream().map(item -> new SimpleGrantedAuthority(item)).collect(Collectors.toList());
+		return authorities.length() == 0 ? new ArrayList<GrantedAuthority>() : Arrays.asList(authorities.split(",")).stream().map(item -> new SimpleGrantedAuthority(item)).collect(Collectors.toList());
 	}
 	
 }

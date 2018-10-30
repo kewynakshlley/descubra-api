@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +21,7 @@ import co.descubra.descubraapi.models.Administrator;
 import co.descubra.descubraapi.models.Event;
 import co.descubra.descubraapi.repository.AdministratorService;
 import co.descubra.descubraapi.repository.EventService;
+import co.descubra.descubraapi.repository.UserService;
 
 @RestController
 
@@ -30,6 +30,9 @@ public class AdministratorController {
 
    @Autowired
    private AdministratorService administratorService;
+   
+   @Autowired
+   private UserService userService;
    
    @Autowired 
    private EventService eventService;
@@ -52,7 +55,9 @@ public class AdministratorController {
     
    @PostMapping(path = "/administrators")
    public ResponseEntity<?> createAdministrator(@RequestBody Administrator administrator) throws DataAlreadyExistsException {
-       Administrator createdAdministrator = administratorService.save(administrator);
+	   
+	   administrator.setUser(userService.save(administrator.getUser()));
+	   Administrator createdAdministrator = administratorService.save(administrator);
        return new ResponseEntity<Administrator>(createdAdministrator, HttpStatus.OK);
    }
     

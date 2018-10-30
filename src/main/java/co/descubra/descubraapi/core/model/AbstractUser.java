@@ -3,13 +3,17 @@ package co.descubra.descubraapi.core.model;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 import co.descubra.descubraapi.models.Role;
 
 @MappedSuperclass
 public abstract class AbstractUser {
-
+	@Id
+	@GeneratedValue
+	private long id;
 	@Column(name = "username")
 	private String username;
 	@Column(name = "password")
@@ -31,5 +35,14 @@ public abstract class AbstractUser {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
 	
 }

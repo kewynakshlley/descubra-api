@@ -30,6 +30,7 @@ public class JwtAuthenticationManager implements AuthenticationManager {
 	private LoginDTO toDTO(AbstractUser user) {
 		LoginDTO loginDTO = new LoginDTO();
 		loginDTO.setUsername(user.getUsername());
+		loginDTO.setId(user.getId());
 		loginDTO.setRoles(user.getRole().stream().map(item -> "ROLE_" + item.getCodeName()).collect(Collectors.toList()));
 		return loginDTO;
 	}
