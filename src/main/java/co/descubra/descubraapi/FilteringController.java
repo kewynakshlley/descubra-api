@@ -3,7 +3,7 @@ package co.descubra.descubraapi;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.descubra.descubraapi.models.Administrator;
+import co.descubra.descubraapi.core.model.Administrator;
 
 
 @RestController

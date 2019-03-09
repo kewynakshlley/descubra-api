@@ -6,10 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import co.descubra.descubraapi.models.Event;
+
+import co.descubra.descubraapi.core.model.Event;
 
 @Repository
-public interface EventService extends JpaRepository<Event, Long>{
+public interface EventRepository extends JpaRepository<Event, Long>{
 	@Query("SELECT e FROM Event e WHERE " + 
 					"("
 							+ "6371 * acos(" + 
@@ -24,5 +25,7 @@ public interface EventService extends JpaRepository<Event, Long>{
 			@Param("radius") Double radius,
 			@Param("longitude") Float longitude,
 			@Param("latitude") Float latitude);
+
+
 
 }

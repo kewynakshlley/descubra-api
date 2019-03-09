@@ -1,4 +1,4 @@
-package co.descubra.descubraapi.models;
+package co.descubra.descubraapi.core.model;
 
 
 import java.util.List;
@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 /**
@@ -31,6 +33,7 @@ public class Administrator {
    private String enterprise;
    private String contact;
    @OneToMany(mappedBy="administrator")
+   @JsonManagedReference
    private List<Event> events;
    @OneToOne
    @JoinColumn(name = "user_id", nullable = false)

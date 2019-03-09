@@ -1,11 +1,9 @@
-package co.descubra.descubraapi.models;
+package co.descubra.descubraapi.core.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-import co.descubra.descubraapi.core.model.AbstractRole;
 
 @Entity
 public class Role extends AbstractRole {

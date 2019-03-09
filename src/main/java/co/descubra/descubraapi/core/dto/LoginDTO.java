@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginDTO {
-	
+	private Long administrator_id;
 	private Long id;
 	
 	private String username;
@@ -46,5 +46,15 @@ public class LoginDTO {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
+	public Long getAdministrator_id() {
+		return administrator_id;
+	}
+
+	public void setAdministrator_id(long i) {
+		this.administrator_id = i;
+	}
+	
+	
 	
 }

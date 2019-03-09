@@ -11,37 +11,51 @@ import org.springframework.security.core.AuthenticationException;
 import co.descubra.descubraapi.core.config.AppContext;
 import co.descubra.descubraapi.core.dto.LoginDTO;
 import co.descubra.descubraapi.core.model.AbstractUser;
-import co.descubra.descubraapi.repository.UserService;
+import co.descubra.descubraapi.repository.AdministratorRepository;
+import co.descubra.descubraapi.repository.UserRepository;
 
 public class JwtAuthenticationManager implements AuthenticationManager {
 
-	private UserService userService;
+	private UserRepository userService;
+	private AdministratorRepository administratorRepository;
 
 	@Override
 	public Authentication authenticate(Authentication auth) throws AuthenticationException {
-		AbstractUser user = this.getUserService().findByUsernameAndPassword(auth.getName(), (String) auth.getCredentials());
+		AbstractUser user = this.getUserRepository().findByUsernameAndPassword(auth.getName(), (String) auth.getCredentials());
 		if(user != null) {
-			return new UsernamePasswordAuthenticationToken(toDTO(user), auth.getCredentials());
+			int idad = this.getAdministratorRepository().findByUser(user.getId());
+			return new UsernamePasswordAuthenticationToken(toDTO(user, idad), auth.getCredentials());
 		}
+		
 		throw new BadCredentialsException("Usuário e/ou senha inválidos.");
 	}
 
 	
-	private LoginDTO toDTO(AbstractUser user) {
+	private LoginDTO toDTO(AbstractUser user, int idad) {
 		LoginDTO loginDTO = new LoginDTO();
 		loginDTO.setUsername(user.getUsername());
 		loginDTO.setId(user.getId());
+		loginDTO.setAdministrator_id(idad);
 		loginDTO.setRoles(user.getRole().stream().map(item -> "ROLE_" + item.getCodeName()).collect(Collectors.toList()));
 		return loginDTO;
 	}
 	
-	protected UserService getUserService() {
+	protected UserRepository getUserRepository() {
 
         if (this.userService == null) {
-            this.userService = AppContext.getBean(UserService.class);
+            this.userService = AppContext.getBean(UserRepository.class);
         }
 
         return this.userService;
+    }
+	
+	protected AdministratorRepository getAdministratorRepository() {
+
+        if (this.administratorRepository == null) {
+            this.administratorRepository = AppContext.getBean(AdministratorRepository.class);
+        }
+
+        return this.administratorRepository;
     }
 
 }

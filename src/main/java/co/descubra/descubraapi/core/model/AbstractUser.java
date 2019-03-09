@@ -7,8 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import co.descubra.descubraapi.models.Role;
-
 @MappedSuperclass
 public abstract class AbstractUser {
 	@Id

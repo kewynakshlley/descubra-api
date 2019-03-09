@@ -1,15 +1,11 @@
-package co.descubra.descubraapi.models;
-
-import java.util.Date;
-
-
+package co.descubra.descubraapi.core.model;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
  
 /**
  * Represents the event that will be shown to mobile application users of the
@@ -28,12 +24,13 @@ public class Event {
     private String description;
     private String category;
     //@Future(message = "The date must be in te future.")
-    private Date date;
+    private String date;
     private String hour;
     private float latitude;
     private float longitude;
     @ManyToOne(fetch=FetchType.EAGER)
-    @JsonIgnore
+    @JsonBackReference
+    
     private Administrator administrator;
  
     /**
@@ -55,7 +52,7 @@ public class Event {
      * @param latitude        The latitude of this event.
      * @param longitude       The longitude of this event.
      */
-    public Event(long administratorId, String name, String description, String category, Date date,
+    public Event(long administratorId, String name, String description, String category, String date,
             String hour, float latitude, float longitude) {
         this.administratorId = administratorId;
  
@@ -164,7 +161,7 @@ public class Event {
      * 
      * @return the date of this event.
      */
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
  
@@ -173,7 +170,7 @@ public class Event {
      * 
      * @param date The new date for this event.
      */
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
  

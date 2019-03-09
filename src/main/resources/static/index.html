@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Descubra! API</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+    <script src="main.js"></script>
+
+    <style>
+        .container {
+            width: 100%;
+        }
+
+        .bloco {
+            float: left;
+            width: 96%;
+            margin-left: 2%;
+
+        }
+
+        .bloco2{
+            float: left;
+        }
+
+        footer{
+            float: left;
+        }
+
+        @media only screen and (min-width: 769px) {
+            .bloco {
+                float: left;
+                width: 65%;
+                margin-left: 0%;
+
+            }
+
+            .bloco2{
+                float: left;
+                
+            }
+
+            footer{
+                float: none;
+            }
+
+
+        }
+
+
+        h1 {
+            text-align: center;
+            font-size: 20px;
+        }
+
+        h3 {
+            font-size: 14px;
+        }
+
+        h2 {
+        }
+
+        a {
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>
+        DESCUBRA! API
+    </h1>
+    
+    <div class="container">
+        <div class="bloco">
+            <h2>
+                Classe Administrators
+            </h2>
+            <h3>
+                <ul>
+                    <li>/administrators <br>
+                        @GET<br>
+                        RETORNA TODOS OS ADMINISTRADORES DO SERVIÇO.
+                    </li>
+                    <br>
+                    <li>
+                        /administrators/{admId} <br>
+                        @GET<br>
+                        PEGA O ADMINISTRADOR PELO ID.
+                    </li>
+                    <br>
+                    <li>
+                        /administrators<br>
+                        @POST<br>
+                        CRIA O ADMINISTRADOR.
+                    </li>
+                    <br>
+                    <li>
+                        /administrators/{admId} <br>
+                        @DELETE<br>
+                        APAGA O ADMINISTRADOR PELO ID.
+                    </li>
+                    <br>
+                    <li>
+                        /administrators/{admId}/events <br>
+                        @GET<br>
+                        PEGA TODOS OS EVENTOS DAQUELE ADMINISTRADOR PELO ID.
+                    </li>
+                    <br>
+                    <li>
+                        /administrators/{admId}/events <br>
+                        @POST<br>
+                        CRIA OS EVENTOS DAQUELE ADMINISTRADOR PELO ID.
+                    </li>
+                </ul>
+
+            </h3>
+        </div>
+
+        <div class="bloco2">
+            <h2>
+                Classe Event
+            </h2>
+            <h3>
+
+                <ul>
+                    <li>/events <br>
+                        @GET<br>
+                        RETORNA TODOS OS EVENTOS DO SERVIÇO.
+                    </li>
+                    <br>
+                    <li>/events/nearby_events <br>
+                        @GET<br>
+                        RETORNA TODOS OS EVENTOS QUE ESTÃO POR PERTO.
+                    </li>
+                    <br>
+                    <li>/events/{eventId} <br>
+                        @GET<br>
+                        PEGA O EVENTO PELO ID.
+                    </li>
+                    <br>
+                    <li>/events <br>
+                        @POST<br>
+                        CRIA O EVENTO.
+                    </li>
+                    <br>
+                    <li>/events/{eventId} <br>
+                        @DELETE<br>
+                        DELETA O EVENTO PELO ID.
+                    </li>
+                    <br>
+                    <li>/events/{eventId} <br>
+                        @PUT<br>
+                        ALTERA INFORMAÇÕES DO EVENTO PELO ID.
+                    </li>
+                </ul>
+
+            </h3>
+        </div>
+    </div>
+
+
+
+    <footer>
+        <br>
+        <h4 style="text-align:center;">
+            Contributors
+        </h4>
+        <ul style="text-align:center;">
+            <a href="https://github.com/airtonferreira" target="_blank">Airton Felix</a>
+            <a href="https://github.com/gabrielalvesc" target="_blank">Gabriel Alves</a>
+            <a href="https://github.com/lucaslopess" target="_blank">Lucas Lopes</a>
+            <a href="https://github.com/kewynakshlley" target="_blank">Kewyn Akshlley</a>
+        </ul>
+
+
+    </footer>
+
+
+
+
+</body>
+
+</html>

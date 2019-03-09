@@ -53,15 +53,4 @@ Windows:
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [Hibernate](http://hibernate.org/) - ORM used
 
-## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/kewynakshlley/descubra-api/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
-
-
-## Authors
-
-See the [contributors](https://github.com/kewynakshlley/descubra-api/graphs/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/kewynakshlley/descubra-api/blob/master/LICENSE) file for details

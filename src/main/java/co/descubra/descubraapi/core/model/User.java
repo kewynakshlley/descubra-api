@@ -1,4 +1,4 @@
-package co.descubra.descubraapi.models;
+package co.descubra.descubraapi.core.model;
 
 import java.util.Set;
 
@@ -7,9 +7,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
-import co.descubra.descubraapi.core.model.AbstractUser;
-
 import javax.persistence.JoinColumn;
 
 @Entity
