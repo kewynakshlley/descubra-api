@@ -21,7 +21,7 @@ public class JwtAuthenticationManager implements AuthenticationManager {
 
 	@Override
 	public Authentication authenticate(Authentication auth) throws AuthenticationException {
-		AbstractUser user = this.getUserRepository().findByUsernameAndPassword(auth.getName(), (String) auth.getCredentials());
+		AbstractUser user = this.getUserRepository().findByEmailAndPassword(auth.getName(), (String) auth.getCredentials());
 		if(user != null) {
 			int idad = this.getAdministratorRepository().findByUser(user.getId());
 			return new UsernamePasswordAuthenticationToken(toDTO(user, idad), auth.getCredentials());
@@ -33,7 +33,7 @@ public class JwtAuthenticationManager implements AuthenticationManager {
 	
 	private LoginDTO toDTO(AbstractUser user, int idad) {
 		LoginDTO loginDTO = new LoginDTO();
-		loginDTO.setUsername(user.getUsername());
+		loginDTO.setEmail(user.getEmail());
 		loginDTO.setId(user.getId());
 		loginDTO.setAdministrator_id(idad);
 		loginDTO.setRoles(user.getRole().stream().map(item -> "ROLE_" + item.getCodeName()).collect(Collectors.toList()));

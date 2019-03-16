@@ -1,71 +1,67 @@
 package co.descubra.descubraapi.core.model;
 
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
 
 @Entity
-@Table(name = "users")
 public class User extends AbstractUser {
 
-    private String name;
-    private String email;
-    private String dateOfBirthday;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role",
-		joinColumns = {@JoinColumn(name = "user_id")},
-		inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private Set<Role> role;
+	private String name;
+	private String lastName;
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "user_role", joinColumns = { 
+			@JoinColumn(name = "user_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "role_id") })
+	private Set<Role> role;
+	@OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+	private List<ShowInterest> showInterest;
+	
 
-    public User() { }
+	public User() {
+	}
 
-    public User(String name, String email, String dateOfBirthday, Set<Role> roles){
-       
-       this.name = name;
-       this.email = email;
-       this.dateOfBirthday = dateOfBirthday;
-       this.role = roles;
-    }
+	public User(String name, String lastName, Set<Role> roles, List<ShowInterest> showInterest) {
+		this.name = name;
+		this.lastName = lastName;
+		this.role = roles;
+		this.showInterest = showInterest;
+	}
 
+	public String getName() {
+		return name;
+	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public List<ShowInterest> getShowInterest() {
+		return showInterest;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getDateOfBirthday() {
-        return dateOfBirthday;
-    }
-
-    public void setDateOfBirthday(String dateOfBirthday) {
-        this.dateOfBirthday = dateOfBirthday;
-    }
-
-	@Override
-    public String toString() {
-        return "User{" +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", dateOfBirthday='" + dateOfBirthday + '\'' +
-                '}';
-    }
+	public void setShowInterestList(List<ShowInterest> showInterest) {
+		this.showInterest = showInterest;
+	}
+	
+	public void setShowInterest(ShowInterest showInterest) {
+		this.showInterest.add(showInterest);
+	}
 
 	@Override
 	public Set<Role> getRole() {
@@ -77,5 +73,6 @@ public class User extends AbstractUser {
 		this.role = role;
 	}
 	
-}
+	
 
+}

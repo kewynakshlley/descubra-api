@@ -26,7 +26,7 @@ public class TokenAuthenticationService {
 	static final String HEADER_STRING = "Authorization";
 
 	static void addAuthentication(HttpServletResponse response, LoginDTO dto) {
-		String accessToken = Jwts.builder().setSubject(dto.getUsername())
+		String accessToken = Jwts.builder().setSubject(dto.getEmail())
 				.claim("id", dto.getId())
 				.claim("roles", toGrantedAuthorities(dto.getRoles()).toString())
 				.signWith(SignatureAlgorithm.HS512, SECRET).compact();

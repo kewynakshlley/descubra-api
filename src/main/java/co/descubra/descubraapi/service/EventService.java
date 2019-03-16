@@ -23,9 +23,9 @@ public class EventService {
 	}
 	
 	
-	public List<Event> getEventsByRatio(double radius, float longitude, float latitude) {
+	/*public List<Event> getEventsByRatio(double radius, float longitude, float latitude) {
 		return eventRepository.findByNamedParams(radius, longitude, latitude);
-	}
+	}*/
 	
 	
 	public ResponseEntity<?> getEvent(long eventId) {

@@ -28,7 +28,7 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
 		AccountCredentials credentials = JsonUtil.fromJSon(request.getReader(), AccountCredentials.class);
-		return this.getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(credentials.getUsername(),
+		return this.getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(credentials.getEmail(),
 				credentials.getPassword(), Collections.emptyList()));
 	}
 

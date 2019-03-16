@@ -23,37 +23,31 @@ import co.descubra.descubraapi.service.UserService;
 public class UserController {
 	@Autowired
 	private UserService userService;
-	
+
 	@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    @GetMapping(path = "/users")
-    public List<User> getAllEvents() {
-        return this.userService.getAllEvents();
-    }
-    
-    
-    @GetMapping (path = "/users/{userId}")
-    public User getUser(@PathVariable long userId) throws DataNotFoundException {
-        return this.userService.getUser(userId);
-    }
-     
-    @PostMapping(path = "/users")
-    public ResponseEntity<?> createUser(@RequestBody User user) throws DataAlreadyExistsException {
-        return createUser(user);
-    }
+	@GetMapping(path = "/users")
+	public List<User> getAllEvents() {
+		return this.userService.getAllEvents();
+	}
 
-	
-     
-    @DeleteMapping(path = "/users/{userId}")
-    public void deleteUser(@PathVariable long userId) {
-    	this.userService.deleteUser(userId);
-    }
-     
-    @PutMapping(path = "/users/{userId}")
-    public ResponseEntity<?> updateUser(@PathVariable("userId") long id, @RequestBody User user) {
-        return this.userService.updateUserService(id, user);
-    }
+	@GetMapping(path = "/users/{userId}")
+	public User getUser(@PathVariable long userId) throws DataNotFoundException {
+		return this.userService.getUser(userId);
+	}
 
+	@PostMapping(path = "/users")
+	public ResponseEntity<?> createUser(@RequestBody User user) throws DataAlreadyExistsException {
+		return createUser(user);
+	}
 
-	
- 
+	@DeleteMapping(path = "/users/{userId}")
+	public void deleteUser(@PathVariable long userId) {
+		this.userService.deleteUser(userId);
+	}
+
+	@PutMapping(path = "/users/{userId}")
+	public ResponseEntity<?> updateUser(@PathVariable("userId") long id, @RequestBody User user) {
+		return this.userService.updateUserService(id, user);
+	}
+
 }

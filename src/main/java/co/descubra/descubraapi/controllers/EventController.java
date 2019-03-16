@@ -2,7 +2,7 @@ package co.descubra.descubraapi.controllers;
 
 import java.util.List;
 
-import javax.websocket.server.PathParam;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,14 +38,14 @@ public class EventController {
     }
     
     
-   @GetMapping(path = "/events/nearby_events")
+   /*@GetMapping(path = "/events/nearby_events")
     public List<Event> getEventsByRatio(
     		@PathParam("radius") double radius,
     		@PathParam("longitude") float longitude,
     		@PathParam("latitude") float latitude){
 		return this.eventService.getEventsByRatio(radius, longitude, latitude);
     	
-    }
+    }*/
 
      
     @GetMapping (path = "/events/{eventId}")

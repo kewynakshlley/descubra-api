@@ -8,9 +8,8 @@ import co.descubra.descubraapi.core.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
 
-	User findByUsernameAndPassword(String username, String password);
+	User findByEmailAndPassword(String email, String password);
 	
 	User findByEmail(String email);
-	
-	User findByUsername(String username);
+
 }
