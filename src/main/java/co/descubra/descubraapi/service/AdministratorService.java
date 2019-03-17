@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 
 import co.descubra.descubraapi.core.model.Administrator;
 import co.descubra.descubraapi.core.model.Event;
-import co.descubra.descubraapi.core.model.ShowInterest;
-import co.descubra.descubraapi.core.model.User;
 import co.descubra.descubraapi.exceptions.DataAlreadyExistsException;
 import co.descubra.descubraapi.exceptions.DataNotFoundException;
 import co.descubra.descubraapi.repository.AdministratorRepository;
@@ -74,15 +72,7 @@ public class AdministratorService {
 		return new ResponseEntity<Event>(event, HttpStatus.CREATED);
 	}
 
-	public ResponseEntity<?> showInterstEvent(long userId, long eventId, ShowInterest showInterest) {
-		User user = userRepository.findById(userId).get();
-		if (user == null) {
-			throw new DataNotFoundException("O administrador não existe!");
-		}
-		user.setShowInterest(showInterest);
-		userRepository.save(user);
-		return new ResponseEntity<ShowInterest>(showInterest, HttpStatus.CREATED);
-	}
+
 
 	public ResponseEntity<?> updateEventForASpecificAdministrator(long admId, Event event, long eventsId) {
 		Administrator adm = administratorRepository.findById(admId).get();

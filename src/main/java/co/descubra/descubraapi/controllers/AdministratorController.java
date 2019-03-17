@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.descubra.descubraapi.core.model.Administrator;
 import co.descubra.descubraapi.core.model.Event;
-import co.descubra.descubraapi.core.model.ShowInterest;
 import co.descubra.descubraapi.exceptions.DataAlreadyExistsException;
 import co.descubra.descubraapi.exceptions.DataNotFoundException;
 import co.descubra.descubraapi.service.AdministratorService;
@@ -66,13 +65,6 @@ public class AdministratorController {
 	   return this.administratorService.createEventForASpecificAdministrator(admId, event);
    }
    
-   @PostMapping(path = "/administrators/{admId}/events/{eventId}/interest")
-   public ResponseEntity<?> showInterstEvent(
-		   @PathVariable long admId,
-		   @PathVariable long eventId, 
-		   @RequestBody ShowInterest showInterest) {
-	   return this.administratorService.showInterstEvent(admId, eventId, showInterest);
-   }
    
    @PutMapping(path = "/administrators/{admId}/events/{eventsId}")
    public ResponseEntity<?> updateEventForASpecificAdministrator

@@ -6,6 +6,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "showInterest")
 @IdClass(ShowInterestPK.class)
@@ -13,13 +15,20 @@ public class ShowInterest {
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "event_id", referencedColumnName = "eventId")
+	@JsonManagedReference
 	private Event event;
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	@JsonManagedReference
 	private User user;
 	private boolean isInterested;
 	
+	
+	
+	public ShowInterest() {
+		super();
+	}
 	public ShowInterest(Event event, User user, boolean isInterested) {
 		super();
 		this.event = event;

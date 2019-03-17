@@ -1,6 +1,8 @@
 package co.descubra.descubraapi.core.model;
 
 import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,6 +26,7 @@ public class Event {
 	private long eventId;
 	private long administratorId;
 	private String name;
+	@Column(length=1000)
 	private String description;
 	private String category;
 	// @Future(message = "The date must be in te future.")
@@ -35,11 +38,12 @@ public class Event {
 	private String location;
 	private String imageLink;
 	private String city;
-	private boolean paid;
+	private String freePaid;
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JsonBackReference
 	private Administrator administrator;
 	@OneToMany(mappedBy = "event")
+	@JsonBackReference
 	private List<ShowInterest> showInterest;
 
 	/**
@@ -62,7 +66,7 @@ public class Event {
 	 * @param longitude       The longitude of this event.
 	 */
 	public Event(long administratorId, String name, String description, String category, String startDate,
-			String endDate, String startHour, String endHour, String addresss, String location, boolean paid,
+			String endDate, String startHour, String endHour, String addresss, String location, String freePaid,
 			String city, String imageLink, List<ShowInterest> showInterest) {
 		this.administratorId = administratorId;
 
@@ -75,7 +79,7 @@ public class Event {
 		this.endHour = endHour;
 		this.addresss = addresss;
 		this.location = location;
-		this.paid = paid;
+		this.freePaid = freePaid;
 		this.city = city;
 		this.imageLink = imageLink;
 		this.showInterest = showInterest;
@@ -176,8 +180,11 @@ public class Event {
 		return showInterest;
 	}
 
-	public void setShowInterest(List<ShowInterest> showInterest) {
+	public void setShowInterestList(List<ShowInterest> showInterest) {
 		this.showInterest = showInterest;
+	}
+	public void setShowInterest(ShowInterest showInterest) {
+		this.showInterest.add(showInterest);
 	}
 
 	public Administrator getAdministrator() {
@@ -252,12 +259,12 @@ public class Event {
 		this.city = city;
 	}
 
-	public boolean isPaid() {
-		return paid;
+	public String getFreePaid() {
+		return freePaid;
 	}
 
-	public void setPaid(boolean paid) {
-		this.paid = paid;
+	public void setFreePaid(String freePaid) {
+		this.freePaid = freePaid;
 	}
 
 }

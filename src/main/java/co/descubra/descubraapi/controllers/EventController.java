@@ -2,7 +2,7 @@ package co.descubra.descubraapi.controllers;
 
 import java.util.List;
 
-
+import javax.websocket.server.PathParam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.descubra.descubraapi.core.model.Event;
+import co.descubra.descubraapi.core.model.ShowInterest;
 import co.descubra.descubraapi.exceptions.DataAlreadyExistsException;
 import co.descubra.descubraapi.exceptions.DataNotFoundException;
 import co.descubra.descubraapi.service.EventService;
@@ -37,7 +38,27 @@ public class EventController {
          
     }
     
+    @GetMapping(path = "/events/filtering_city")
+    public List<Event> getEventsFilteredByCity(
+    		@PathParam("city") String city){
+		return this.eventService.getEventsFilteredByCity(city);
+    	
+    }
     
+    @GetMapping(path = "/events/filtering_both")
+    public List<Event> getEventsFilteredByBoth(
+    		@PathParam("city") String city,
+    		@PathParam("category") String category){
+		return this.eventService.getEventsFiltered(city, category);
+    	
+    }
+    
+    @GetMapping(path = "/events/filtering_category")
+    public List<Event> getEventsFilteredByCategory(
+    		@PathParam("category") String category){
+		return this.eventService.getEventsFilteredByCategory(category);
+    	
+    }
    /*@GetMapping(path = "/events/nearby_events")
     public List<Event> getEventsByRatio(
     		@PathParam("radius") double radius,
@@ -68,6 +89,12 @@ public class EventController {
     @PutMapping(path = "/events/{eventId}")
     public @ResponseBody ResponseEntity<?> updateEvent(@PathVariable("eventId") long id, @RequestBody Event event) {
         return this.eventService.updateEvent(id, event);
+    }
+    
+    @PostMapping(path = "/events/interest")
+    public ResponseEntity<?> showInterstEvent(
+ 		   @RequestBody ShowInterest showInterest) {
+ 	   return this.eventService.showInterstEvent(showInterest);
     }
 
 

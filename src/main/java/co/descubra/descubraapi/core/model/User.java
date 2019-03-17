@@ -9,6 +9,9 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.JoinColumn;
 
 @Entity
@@ -22,6 +25,7 @@ public class User extends AbstractUser {
 			@JoinColumn(name = "role_id") })
 	private Set<Role> role;
 	@OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+	@JsonBackReference
 	private List<ShowInterest> showInterest;
 	
 
