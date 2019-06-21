@@ -11,7 +11,7 @@ public class FilteringController {
     
    @GetMapping("/filtering")
    public Administrator retrieveAdministratorBean() {
-       return new Administrator(null);
+       return new Administrator(0, null, null, null);
    }
     
 

@@ -1,6 +1,7 @@
 package co.descubra.descubraapi.controllers;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.websocket.server.PathParam;
 
@@ -18,7 +19,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.descubra.descubraapi.core.model.Event;
-import co.descubra.descubraapi.core.model.ShowInterest;
+import co.descubra.descubraapi.core.dto.EventFeedbackDTO;
+import co.descubra.descubraapi.core.dto.EventRatingAVGByAdministratorDTO;
+import co.descubra.descubraapi.core.dto.EventRatingAVGByCategoryDTO;
+import co.descubra.descubraapi.core.dto.EventRatingAverageDTO;
+import co.descubra.descubraapi.core.dto.InterestCountDTO;
+import co.descubra.descubraapi.core.model.Administrator;
+import co.descubra.descubraapi.core.model.AdministratorEventInterest;
 import co.descubra.descubraapi.exceptions.DataAlreadyExistsException;
 import co.descubra.descubraapi.exceptions.DataNotFoundException;
 import co.descubra.descubraapi.service.EventService;
@@ -91,13 +98,67 @@ public class EventController {
         return this.eventService.updateEvent(id, event);
     }
     
-    @PostMapping(path = "/events/interest")
-    public ResponseEntity<?> showInterstEvent(
- 		   @RequestBody ShowInterest showInterest) {
- 	   return this.eventService.showInterstEvent(showInterest);
+    @PostMapping(path = "/events/showInterest")
+    public @ResponseBody ResponseEntity<?> showInterest(@RequestBody AdministratorEventInterest event) throws Exception {
+        return this.eventService.showInterest(event);
     }
-
-
-	
+    
+    @DeleteMapping(path = "/events/showInterest/cancel")
+    public @ResponseBody ResponseEntity<?> showInterestCancel(@RequestBody AdministratorEventInterest event) {
+        return this.eventService.showInterestCancel(event);
+    }
+    
+    @GetMapping(path = "/events/interested_list/{eventId}")
+    public Set<Administrator> getUsersnterested(@PathVariable("eventId") long id){
+		return this.eventService.getInterestedList(id);
+    	
+    }
+    
+    @GetMapping(path = "/events/{eventId}/interests_number")
+    public InterestCountDTO getInterestsNumber(@PathVariable("eventId") long id){
+		return this.eventService.getInterestsNumber(id);
+    	
+    }
+    
+    @GetMapping(path = "/events/{eventId}/rating_average")
+    public EventRatingAverageDTO getEventAverageRating(@PathVariable("eventId") long id){
+		return this.eventService.getEventAverageRating(id);
+    	
+    }
+    @GetMapping(path = "/events/{category}/rating_average_category")
+    public EventRatingAVGByCategoryDTO getEventAverageRatingByCategory(@PathVariable("category") String category){
+		return this.eventService.getEventRatingAverageByCategory(category);
+    	
+    }
+    
+    @GetMapping(path = "/events/{adminId}/rating_average_administrator")
+    public EventRatingAVGByAdministratorDTO getEventAverageRatingByAdministrator(@PathVariable("adminId") long adminId){
+		return this.eventService.getEventRatingAverageByCategory(adminId);
+    	
+    }
+    
+    @PostMapping(path = "/events/feedback")
+    public @ResponseBody ResponseEntity<?> giveFeedback(@RequestBody EventFeedbackDTO eventFeedback){
+    	return this.eventService.giveFeedBack(eventFeedback);
+    }
+    
+    @DeleteMapping(path = "/events/feedback/{feedbackdId}/remove")
+    public void removeFeedBack(@PathVariable("feedbackdId") long id){
+    	this.eventService.removeFeedBack(id);
+    }
+    
+    @GetMapping(path = "/events/future_events")
+    public List<Event> getFutureEvents(){
+    	return eventService.getFutureEvents();
+    }
+    
+    @GetMapping(path = "/events/past_events")
+    public List<Event> getPastEvents(){
+    	return eventService.getPastEvents();
+    }
+    @GetMapping(path = "/events/current_events")
+    public List<Event> getCurrentEvents(){
+    	return eventService.getCurrentEvents();
+    }
  
 }

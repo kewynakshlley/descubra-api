@@ -1,16 +1,25 @@
 package co.descubra.descubraapi.core.model;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Represents the event that will be shown to mobile application users of the
@@ -20,31 +29,56 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
  *
  */
 @Entity
+@Table(name="EVENTS")
+@JsonIgnoreProperties(value="showInterest")
 public class Event {
 	@Id
 	@GeneratedValue
+	@Column(name = "EVENT_ID")
 	private long eventId;
+	@Column(name = "ADMINISTRATOR_ID")
 	private long administratorId;
+	@Column(name = "NAME")
 	private String name;
-	@Column(length=1000)
+	@Column(name = "DESCRIPTION", length=1000)
 	private String description;
+	@Column(name = "CATEGORY")
 	private String category;
 	// @Future(message = "The date must be in te future.")
-	private String startDate;
-	private String endDate;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "START_DATE")
+	private Date startDate;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "END_DATE")
+	private Date endDate;
+	@Column(name = "START_HOUR")
 	private String startHour;
+	@Column(name = "END_HOUR")
 	private String endHour;
-	private String addresss;
+	@Column(name = "ADDRESS")
+	private String address;
+	@Column(name = "LOCATION")
 	private String location;
+	@Column(name = "IMAGE_LINK", length=1000)
 	private String imageLink;
+	@Column(name = "VIDEO_LINK", length=1000)
+	private String videoLink;
+	@Column(name = "CITY")
 	private String city;
+	@Column(name = "FREE_PAID")
 	private String freePaid;
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JsonBackReference
+	@JsonBackReference(value = "event")
 	private Administrator administrator;
+	@JsonIgnore
+	@ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                CascadeType.PERSIST,
+                CascadeType.MERGE
+            }, mappedBy = "inEvent")
+	private Set<Administrator> administrators;
 	@OneToMany(mappedBy = "event")
-	@JsonBackReference
-	private List<ShowInterest> showInterest;
+	private List<EventFeedback> eventFeedbacks;
 
 	/**
 	 * Default constructor.
@@ -65,9 +99,9 @@ public class Event {
 	 * @param latitude        The latitude of this event.
 	 * @param longitude       The longitude of this event.
 	 */
-	public Event(long administratorId, String name, String description, String category, String startDate,
-			String endDate, String startHour, String endHour, String addresss, String location, String freePaid,
-			String city, String imageLink, List<ShowInterest> showInterest) {
+	public Event(long administratorId, String name, String description, String category, Date startDate,
+			Date endDate, String startHour, String endHour, String address, String location, String freePaid,
+			String city, String imageLink, String videoLink, Set<Administrator> adminstrators, List<EventFeedback> eventFeedbacks) {
 		this.administratorId = administratorId;
 
 		this.name = name;
@@ -77,12 +111,14 @@ public class Event {
 		this.endDate = endDate;
 		this.startHour = startHour;
 		this.endHour = endHour;
-		this.addresss = addresss;
+		this.address = address;
 		this.location = location;
 		this.freePaid = freePaid;
 		this.city = city;
 		this.imageLink = imageLink;
-		this.showInterest = showInterest;
+		this.videoLink = videoLink;
+		this.administrators = adminstrators;
+		this.eventFeedbacks = eventFeedbacks;
 	}
 
 	/**
@@ -176,15 +212,12 @@ public class Event {
 		this.category = category;
 	}
 
-	public List<ShowInterest> getShowInterest() {
-		return showInterest;
+	public Set<Administrator> getShowInterest() {
+		return administrators;
 	}
-
-	public void setShowInterestList(List<ShowInterest> showInterest) {
-		this.showInterest = showInterest;
-	}
-	public void setShowInterest(ShowInterest showInterest) {
-		this.showInterest.add(showInterest);
+	
+	public void setShowInterest(Set<Administrator> adminstrators) {
+		this.administrators = adminstrators;
 	}
 
 	public Administrator getAdministrator() {
@@ -195,19 +228,19 @@ public class Event {
 		this.administrator = administrator;
 	}
 
-	public String getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(String startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-	public String getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(String endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 
@@ -227,12 +260,12 @@ public class Event {
 		this.endHour = endHour;
 	}
 
-	public String getAddresss() {
-		return addresss;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setAddresss(String addresss) {
-		this.addresss = addresss;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public String getLocation() {
@@ -266,5 +299,24 @@ public class Event {
 	public void setFreePaid(String freePaid) {
 		this.freePaid = freePaid;
 	}
+
+	public String getVideoLink() {
+		return videoLink;
+	}
+
+	public void setVideoLink(String videoLink) {
+		this.videoLink = videoLink;
+	}
+
+	public List<EventFeedback> getEventFeedbacks() {
+		return eventFeedbacks;
+	}
+
+	public void setEventFeedbacks(List<EventFeedback> eventFeedbacks) {
+		this.eventFeedbacks = eventFeedbacks;
+	}
+	
+	
+	
 
 }

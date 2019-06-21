@@ -1,7 +1,7 @@
 package co.descubra.descubraapi.controllers;
 
 import java.util.List;
-
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.descubra.descubraapi.core.dto.EmailDTO;
 import co.descubra.descubraapi.core.model.Administrator;
 import co.descubra.descubraapi.core.model.Event;
 import co.descubra.descubraapi.exceptions.DataAlreadyExistsException;
@@ -29,7 +30,7 @@ public class AdministratorController {
    @Autowired
    private AdministratorService administratorService;
       
-    
+  
    @GetMapping(path = "/administrators")
    public List<Administrator> getAllAdministrators() {
        return this.administratorService.getAllAdministrators();
@@ -42,7 +43,8 @@ public class AdministratorController {
 
     
    @PostMapping(path = "/administrators")
-   public ResponseEntity<?> createAdministrator(@RequestBody Administrator administrator) throws DataAlreadyExistsException {
+   public ResponseEntity<?> createAdministrator(@RequestBody Administrator administrator)
+		   throws DataAlreadyExistsException {
 	   return this.administratorService.createAdministrator(administrator);
    }
 
@@ -70,6 +72,17 @@ public class AdministratorController {
    public ResponseEntity<?> updateEventForASpecificAdministrator
    (@PathVariable long admId, @RequestBody Event event, @PathVariable long eventsId) {
 	   return this.administratorService.updateEventForASpecificAdministrator(admId, event, eventsId);
+   }
+   
+   @GetMapping(path = "/administrators/interested_events/{adminId}")
+   public Set<Event> getUsersInterested(@PathVariable("adminId") long adminId){
+		return this.administratorService.getInterestedEvents(adminId);
+   	
+   }
+   
+   @PostMapping(path = "/recovery")
+   public void recoveryPassword(@RequestBody EmailDTO email) {
+	   administratorService.recoveryPassword(email);
    }
    
 }
